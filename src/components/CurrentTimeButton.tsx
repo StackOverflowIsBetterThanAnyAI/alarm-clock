@@ -5,6 +5,7 @@ import {
     ContextCountdown,
     ContextCurrentTime,
     ContextPopupActive,
+    ContextTimeEnabled,
 } from '../App'
 
 const CurrentTimeButton = () => {
@@ -44,10 +45,20 @@ const CurrentTimeButton = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [currentTimeActive, setCurrentTimeActive] = contextCurrentTime
 
+    const context = useContext(ContextTimeEnabled)
+    if (!context) {
+        throw new Error(
+            'ContextTimeEnabled must be used within a ContextTimeEnabled.Provider'
+        )
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [timeEnabled, setTimeEnabled] = context
+
     const handleClick = () => {
         setAlarmActive(false)
         setCurrentTimeActive(true)
         setCountdownActive(false)
+        setTimeEnabled(true)
     }
 
     return (

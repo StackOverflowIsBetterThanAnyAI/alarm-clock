@@ -69,7 +69,6 @@ const App = () => {
                                 >
                                     {alarmActive && (
                                         <div className="flex flex-col justify-end">
-                                            <Toggle disabled />
                                             <CurrentTime
                                                 enabled={timeEnabled}
                                                 hideDate
