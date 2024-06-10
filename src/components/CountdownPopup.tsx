@@ -87,7 +87,7 @@ const CountdownPopup: FC<CountdownPopupProps> = ({
                             <button
                                 id="Break in Between"
                                 onClick={handleBreakEnabled}
-                                className="px-4 outline outline-1 rounded-md bg-zinc-700 outline-zinc-50 min-w-14
+                                className="px-4 outline outline-1 rounded-md bg-zinc-700 outline-zinc-50 min-w-14 min-h-8
                             focus:outline-4
                             hover:bg-zinc-500
                             active:bg-zinc-700"

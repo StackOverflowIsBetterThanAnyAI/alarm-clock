@@ -26,7 +26,7 @@ const Select: FC<SelectProps> = ({
                 id={id}
                 onChange={onChange}
                 value={value}
-                className="bg-zinc-700 p-1 rounded-md outline outline-1 outline-zinc-50 min-w-14 text-base lg:text-xl sm:text-lg
+                className="bg-zinc-700 p-1 rounded-md outline outline-1 outline-zinc-50 min-w-14 min-h-8 text-base lg:text-xl sm:text-lg
                 focus:outline-4
                 hover:bg-zinc-500
                 active:bg-zinc-600"

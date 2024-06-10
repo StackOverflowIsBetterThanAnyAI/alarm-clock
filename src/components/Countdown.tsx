@@ -290,8 +290,7 @@ const Countdown = () => {
                                         <>
                                             {currentSet > 1 && (
                                                 <h2 className="m-auto text-xl lg:text-3xl sm:text-2xl pt-2">
-                                                    Current Set:{' '}
-                                                    {currentSetCounter}
+                                                    {`Current Set: ${currentSetCounter}/${currentSet}`}
                                                 </h2>
                                             )}
                                             <h3 className="m-auto text-lg lg:text-2xl sm:text-xl">
