@@ -8,7 +8,7 @@ module.exports = {
                     'pulse 1s cubic-bezier(0.4, 0.5, 0.6, 1) infinite',
             },
             minHeight: {
-                90: '344px',
+                90: '364px',
             },
         },
     },
