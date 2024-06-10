@@ -35,9 +35,10 @@ const Countdown = () => {
 
     const popupRef = useRef<HTMLDivElement | null>(null)
     const timerRef = useRef<NodeJS.Timeout | null>(null)
-    const audioRefBeep = useRef<HTMLAudioElement>(null)
-    const audioRefBeepLong = useRef<HTMLAudioElement>(null)
-    const audioRefPreCountdown = useRef<HTMLAudioElement>(null)
+    const audioRefBeep = useRef<HTMLAudioElement | null>(null)
+    const audioRefBeepLong = useRef<HTMLAudioElement | null>(null)
+    const audioRefPreCountdown = useRef<HTMLAudioElement | null>(null)
+    const buttonRef = useRef<HTMLButtonElement | null>(null)
     const isUpdatingRef = useRef<boolean>(false)
 
     const handleSetup = () => {
@@ -46,6 +47,7 @@ const Countdown = () => {
 
     const handleCancel = useCallback(() => {
         setEditCountdown(false)
+        buttonRef.current?.focus()
     }, [setEditCountdown])
 
     const handleDeactivate = () => {
@@ -245,6 +247,7 @@ const Countdown = () => {
                         onClick={handleSetup}
                         autofocus
                         unfocussable={editCountdown}
+                        ref={buttonRef}
                     >
                         Setup
                     </Button>

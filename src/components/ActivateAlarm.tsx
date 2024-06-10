@@ -31,7 +31,8 @@ const ActivateAlarm = () => {
     const [audioPlaying, setAudioPlaying] = useState(false)
 
     const popupRef = useRef<HTMLDivElement | null>(null)
-    const audioRef = useRef<HTMLAudioElement>(null)
+    const audioRef = useRef<HTMLAudioElement | null>(null)
+    const buttonRef = useRef<HTMLButtonElement | null>(null)
 
     const handleClick = () => {
         setEditAlarm((prev) => !prev)
@@ -59,6 +60,7 @@ const ActivateAlarm = () => {
 
     const handleCancel = useCallback(() => {
         setEditAlarm(false)
+        buttonRef.current?.focus()
     }, [setEditAlarm])
 
     const handleSetAlarmActive = () => {
@@ -166,6 +168,7 @@ const ActivateAlarm = () => {
                         onClick={handleClick}
                         autofocus
                         unfocussable={editAlarm}
+                        ref={buttonRef}
                     >
                         Activate Alarm
                     </Button>
