@@ -34,7 +34,7 @@ const App = () => {
     const [alarmActive, setAlarmActive] = useState<boolean>(false)
     const [countdownActive, setCountdownActive] = useState<boolean>(false)
     const [currentTimeActive, setCurrentTimeActive] = useState<boolean>(true)
-    const [timeEnabled, setTimeEnabled] = useState<boolean>(false)
+    const [timeEnabled, setTimeEnabled] = useState<boolean>(true)
     const [popupActive, setPopupActive] = useState<boolean>(false)
     const [currentTime, setCurrentTime] = useState(() => {
         const now = new Date()
