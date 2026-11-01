@@ -39,25 +39,25 @@ const CurrentTime: FC<CurrentTimeProps> = ({ enabled, hideDate = false }) => {
     }, [enabled, updateDate])
 
     return (
-        <div className="flex flex-col m-auto text-zinc-50">
-            <h1 className="m-auto text-2xl lg:text-4xl sm:text-3xl">
+        <div className="flex flex-col mx-auto items-center">
+            <h1 className="mx-auto text-base lg:text-xl sm:text-lg font-medium uppercase tracking-widest text-fg-muted">
                 Current Time
             </h1>
             {enabled ? (
                 <>
-                    <h2 className="m-auto text-xl lg:text-3xl sm:text-2xl">{`${currentTime.hour} : ${currentTime.minute} : ${currentTime.second}`}</h2>
+                    <p className="mx-auto text-4xl lg:text-6xl sm:text-5xl font-mono font-semibold">{`${currentTime.hour}:${currentTime.minute}:${currentTime.second}`}</p>
                     {!hideDate && (
-                        <h3 className="m-auto text-lg lg:text-2xl sm:text-xl">{`${currentTime.weekDay}, ${currentTime.month} ${currentTime.day} ${currentTime.year}`}</h3>
+                        <p className="mx-auto text-base lg:text-xl sm:text-lg text-fg-muted">{`${currentTime.weekDay}, ${currentTime.month} ${currentTime.day} ${currentTime.year}`}</p>
                     )}
                 </>
             ) : (
                 <>
-                    <h2 className="m-auto text-xl lg:text-3xl sm:text-2xl text-zinc-300">
-                        00 : 00 : 00
-                    </h2>
-                    <h3 className="m-auto text-lg lg:text-2xl sm:text-xl text-zinc-300 italic">
+                    <p className="mx-auto text-4xl lg:text-6xl sm:text-5xl font-mono font-semibold text-fg-muted">
+                        00:00:00
+                    </p>
+                    <p className="mx-auto text-base lg:text-xl sm:text-lg text-fg-muted italic">
                         Disabled
-                    </h3>
+                    </p>
                 </>
             )}
         </div>

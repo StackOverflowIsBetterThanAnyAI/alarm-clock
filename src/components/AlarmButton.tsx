@@ -62,7 +62,11 @@ const AlarmButton = () => {
     }
 
     return (
-        <Button onClick={handleClick} unfocussable={popupActive}>
+        <Button
+            onClick={handleClick}
+            unfocussable={popupActive}
+            current={alarmActive}
+        >
             Alarm
         </Button>
     )

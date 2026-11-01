@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
 type AudioProps = {
-    audioRef: React.RefObject<HTMLAudioElement>
+    audioRef: React.RefObject<HTMLAudioElement | null>
     loop: boolean
     src: string
 }

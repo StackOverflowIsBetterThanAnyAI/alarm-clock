@@ -62,7 +62,11 @@ const CountdownButton = () => {
     }
 
     return (
-        <Button onClick={handleClick} unfocussable={popupActive}>
+        <Button
+            onClick={handleClick}
+            unfocussable={popupActive}
+            current={countdownActive}
+        >
             Countdown
         </Button>
     )

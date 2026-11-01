@@ -3,6 +3,7 @@ import Button from './Button'
 import CountdownPopup from './CountdownPopup'
 import Audio from './Audio'
 import { getSeconds } from '../helper/getSeconds'
+import { getTwoDigits } from '../helper/getTwoDigits'
 import { ContextPopupActive } from '../App'
 
 const Countdown = () => {
@@ -34,7 +35,7 @@ const Countdown = () => {
     >(null)
 
     const popupRef = useRef<HTMLDivElement | null>(null)
-    const timerRef = useRef<NodeJS.Timeout | null>(null)
+    const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
     const audioRefBeep = useRef<HTMLAudioElement | null>(null)
     const audioRefBeepLong = useRef<HTMLAudioElement | null>(null)
     const audioRefPreCountdown = useRef<HTMLAudioElement | null>(null)
@@ -185,29 +186,14 @@ const Countdown = () => {
             }
         }
 
-        const handleEscape = (event: KeyboardEvent) => {
-            if (
-                popupRef.current &&
-                !popupRef.current.contains(event.target as Node) &&
-                event.key === 'Escape'
-            ) {
-                setEditCountdown(false)
-            }
-        }
-
         if (editCountdown) {
             document.addEventListener('mousedown', handleClickOutside)
-            document.addEventListener('keydown', handleEscape)
-        } else {
-            document.removeEventListener('mousedown', handleClickOutside)
-            document.removeEventListener('keydown', handleEscape)
         }
 
         return () => {
             document.removeEventListener('mousedown', handleClickOutside)
-            document.removeEventListener('keydown', handleEscape)
         }
-    }, [editCountdown, handleCancel, setEditCountdown])
+    }, [editCountdown, handleCancel])
 
     const sets = Array.from({ length: 20 }, (_, i) => i + 1)
     const breakSeconds = Array.from({ length: 12 }, (_, i) => (i + 1) * 5)
@@ -235,17 +221,20 @@ const Countdown = () => {
 
     return (
         <>
-            <h2 className="m-auto text-xl lg:text-3xl sm:text-2xl text-zinc-50">
-                Countdown
-            </h2>
-            <h2 className="m-auto text-lg lg:text-2xl sm:text-xl text-zinc-50">
-                with optional Breaks
-            </h2>
+            <div className="flex flex-col items-center gap-1">
+                <h1 className="text-2xl lg:text-4xl sm:text-3xl font-semibold tracking-tight">
+                    Countdown
+                </h1>
+                <p className="text-base lg:text-xl sm:text-lg text-fg-muted">
+                    with optional Breaks
+                </p>
+            </div>
             {!countdownActive && (
-                <div className="min-w-28 m-auto pt-2">
+                <div className="mx-auto">
                     <Button
                         onClick={handleSetup}
                         autofocus
+                        fixedWidth
                         unfocussable={editCountdown}
                         ref={buttonRef}
                     >
@@ -276,56 +265,77 @@ const Countdown = () => {
             )}
             {countdownActive && (
                 <>
-                    <div className="flex flex-col min-w-64 m-auto mt-2 px-2 text-base lg:text-xl sm:text-lg outline outline-2 outline-green-600 text-zinc-50 bg-blue-800">
-                        {preCountdownDisplay > 0 ? (
-                            <>
-                                <h2 className="m-auto text-xl lg:text-3xl sm:text-2xl pt-2">
-                                    {preCountdownDisplay}
-                                </h2>
-                                <h3 className="m-auto text-lg lg:text-2xl sm:text-xl pb-2">
-                                    Get ready!
-                                </h3>
-                            </>
-                        ) : (
-                            <>
+                    <div className="flex flex-col w-full max-w-xs mx-auto px-4 py-3 rounded-xl border bg-surface text-base lg:text-xl sm:text-lg border-line">
+                        <p className="sr-only" aria-live="polite">
+                            {preCountdownDisplay > 0
+                                ? 'Get ready!'
+                                : currentItem &&
+                                  `${currentItem}${
+                                      currentSet > 1
+                                          ? `, set ${currentSetCounter} of ${currentSet}`
+                                          : ''
+                                  }`}
+                        </p>
+                        <div
+                            role="timer"
+                            className="flex flex-col justify-center min-h-24"
+                        >
+                            {preCountdownDisplay > 0 ? (
                                 <>
-                                    {currentTimer !== null && (
-                                        <>
-                                            {currentSet > 1 && (
-                                                <h2 className="m-auto text-xl lg:text-3xl sm:text-2xl pt-2">
-                                                    {`Current Set: ${currentSetCounter}/${currentSet}`}
-                                                </h2>
-                                            )}
-                                            <h3 className="m-auto text-lg lg:text-2xl sm:text-xl">
-                                                {currentItem}: {currentTimer}s
-                                            </h3>
-                                        </>
-                                    )}
+                                    <p className="mx-auto text-base lg:text-xl sm:text-lg text-fg-muted">
+                                        Get ready!
+                                    </p>
+                                    <p className="mx-auto text-3xl lg:text-5xl sm:text-4xl font-mono font-semibold">
+                                        {preCountdownDisplay}
+                                    </p>
                                 </>
-                            </>
-                        )}
-                        <div className="m-auto p-2">
-                            <Button type="red" onClick={handleDeactivate}>
+                            ) : (
+                                currentTimer !== null && (
+                                    <>
+                                        <p className="mx-auto text-base lg:text-xl sm:text-lg text-fg-muted">
+                                            {currentItem}
+                                            {currentSet > 1 &&
+                                                ` · Set ${currentSetCounter}/${currentSet}`}
+                                        </p>
+                                        <p className="mx-auto text-3xl lg:text-5xl sm:text-4xl font-mono font-semibold">
+                                            {`${getTwoDigits(
+                                                Math.floor(currentTimer / 60)
+                                            )}:${getTwoDigits(currentTimer % 60)}`}
+                                        </p>
+                                    </>
+                                )
+                            )}
+                        </div>
+                        <div className="mx-auto p-2">
+                            <Button
+                                type="danger"
+                                onClick={handleDeactivate}
+                                autofocus
+                            >
                                 Cancel
                             </Button>
                         </div>
                     </div>
-                    <h4 className="text-base lg:text-xl sm:text-lg m-auto pt-2 text-zinc-50">
+                    <p className="text-base lg:text-xl sm:text-lg mx-auto text-fg-muted">
                         Please keep the window open!
-                    </h4>
+                    </p>
                 </>
             )}
             <Audio
                 audioRef={audioRefPreCountdown}
-                src="/audio/preCountdown.mp3"
+                src="./audio/preCountdown.mp3"
                 loop={false}
             />
             <Audio
                 audioRef={audioRefBeepLong}
-                src="/audio/beepLong.mp3"
+                src="./audio/beepLong.mp3"
                 loop={false}
             />
-            <Audio audioRef={audioRefBeep} src="/audio/beep.mp3" loop={false} />
+            <Audio
+                audioRef={audioRefBeep}
+                src="./audio/beep.mp3"
+                loop={false}
+            />
         </>
     )
 }

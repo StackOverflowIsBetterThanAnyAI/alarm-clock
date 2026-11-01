@@ -93,29 +93,14 @@ const ActivateAlarm = () => {
             }
         }
 
-        const handleEscape = (event: KeyboardEvent) => {
-            if (
-                popupRef.current &&
-                !popupRef.current.contains(event.target as Node) &&
-                event.key === 'Escape'
-            ) {
-                setEditAlarm(false)
-            }
-        }
-
         if (editAlarm) {
             document.addEventListener('mousedown', handleClickOutside)
-            document.addEventListener('keydown', handleEscape)
-        } else {
-            document.removeEventListener('mousedown', handleClickOutside)
-            document.removeEventListener('keydown', handleEscape)
         }
 
         return () => {
             document.removeEventListener('mousedown', handleClickOutside)
-            document.removeEventListener('keydown', handleEscape)
         }
-    }, [editAlarm, handleCancel, setEditAlarm])
+    }, [editAlarm, handleCancel])
 
     const minutes = Array.from({ length: 60 }, (_, i) => i)
     const seconds = Array.from({ length: 60 }, (_, i) => i)
@@ -163,10 +148,11 @@ const ActivateAlarm = () => {
     return (
         <>
             {!alarmActive && (
-                <div className="min-w-28 m-auto pt-2">
+                <div className="mx-auto">
                     <Button
                         onClick={handleClick}
                         autofocus
+                        fixedWidth
                         unfocussable={editAlarm}
                         ref={buttonRef}
                     >
@@ -190,21 +176,26 @@ const ActivateAlarm = () => {
             {alarmActive && (
                 <>
                     <div
-                        className={`flex flex-col min-w-64 m-auto mt-2 px-2 text-base lg:text-xl sm:text-lg outline outline-2 outline-green-600 text-zinc-50 bg-blue-800 ${
-                            audioPlaying && 'animate-pulse-fast'
+                        className={`flex flex-col w-full max-w-xs mx-auto px-4 py-3 rounded-xl border bg-surface text-base lg:text-xl sm:text-lg ${
+                            audioPlaying
+                                ? 'border-accent motion-safe:animate-pulse-fast'
+                                : 'border-line'
                         }`}
                     >
-                        <h3 className="text-lg lg:text-2xl sm:text-xl m-auto">
+                        <h2
+                            className="text-base lg:text-xl sm:text-lg mx-auto text-fg-muted"
+                            aria-live="assertive"
+                        >
                             {`Alarm${
                                 audioPlaying ? '!' : ' will be ringing at:'
                             }`}
-                        </h3>
-                        <h2 className="m-auto text-xl lg:text-3xl sm:text-2xl">
-                            {alarmTime}
                         </h2>
-                        <div className="m-auto p-2">
+                        <p className="mx-auto text-3xl lg:text-5xl sm:text-4xl font-mono font-semibold">
+                            {alarmTime.replaceAll(' ', '')}
+                        </p>
+                        <div className="mx-auto p-2">
                             <Button
-                                type="red"
+                                type="danger"
                                 onClick={handleDeactivateAlarm}
                                 autofocus
                             >
@@ -212,12 +203,12 @@ const ActivateAlarm = () => {
                             </Button>
                         </div>
                     </div>
-                    <h4 className="text-base lg:text-xl sm:text-lg m-auto pt-2 text-zinc-50">
+                    <p className="text-base lg:text-xl sm:text-lg mx-auto text-fg-muted">
                         Please keep the window open!
-                    </h4>
+                    </p>
                 </>
             )}
-            <Audio audioRef={audioRef} src="/audio/alarm.mp3" loop />
+            <Audio audioRef={audioRef} src="./audio/alarm.mp3" loop />
         </>
     )
 }

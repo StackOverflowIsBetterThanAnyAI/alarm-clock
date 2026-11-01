@@ -18,31 +18,29 @@ const Toggle: FC<ToggleProps> = ({ autofocus = false }) => {
 
     return (
         <button
-            className={`flex m-auto mb-4 outline outline-2 text-base lg:text-xl sm:text-lg ${
-                timeEnabled ? 'outline-green-600' : 'outline-red-600'
-            } rounded-xl mb-2
-            focus:outline-zinc-50 focus:font-medium focus:outline-4`}
+            className="flex mx-auto rounded-full border border-line bg-surface p-1 text-base lg:text-xl sm:text-lg"
+            role="switch"
+            aria-checked={timeEnabled}
+            aria-label="Show current time"
             onClick={handleClick}
             autoFocus={autofocus}
         >
-            <div
-                className={`px-2 py-1 rounded-l-xl ${
-                    timeEnabled
-                        ? 'text-zinc-50 hover:bg-green-700 active:bg-green-800 bg-green-600'
-                        : 'text-zinc-200 bg-zinc-500'
+            <span
+                aria-hidden="true"
+                className={`rounded-full px-3 py-0.5 transition-colors ${
+                    timeEnabled ? 'bg-accent text-on-accent' : 'text-fg-muted'
                 }`}
             >
                 Enabled
-            </div>
-            <div
-                className={`px-2 py-1 rounded-r-xl ${
-                    timeEnabled
-                        ? 'text-zinc-200 bg-zinc-500'
-                        : 'text-zinc-50 bg-red-600'
+            </span>
+            <span
+                aria-hidden="true"
+                className={`rounded-full px-3 py-0.5 transition-colors ${
+                    timeEnabled ? 'text-fg-muted' : 'bg-accent text-on-accent'
                 }`}
             >
                 Disabled
-            </div>
+            </span>
         </button>
     )
 }

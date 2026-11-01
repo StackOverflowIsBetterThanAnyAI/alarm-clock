@@ -4,6 +4,8 @@
 
 - If you wish to, you can toggle between blocking and allowing on-screen ads.
 
+- The project is built with [Vite](https://vite.dev). For local development, install all dependencies (`npm i`) and run `npm run dev`.
+
 - In order to get this repository work as a Chrome extension, install all dependencies (`npm i`), and execute `npm run build`.
 
 - Then, open Google Chrome, and search for `chrome://extensions`.
