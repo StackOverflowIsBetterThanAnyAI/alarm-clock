@@ -1,3 +1,61 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@import '@fontsource-variable/jetbrains-mono/wght.css';
+
+@theme {
+    --font-mono:
+        'JetBrains Mono Variable', ui-monospace, 'Cascadia Mono', Consolas,
+        monospace;
+
+    --color-canvas: var(--color-zinc-50);
+    --color-surface: var(--color-white);
+    --color-surface-hover: var(--color-zinc-100);
+    --color-line: var(--color-zinc-500);
+    --color-fg: var(--color-zinc-900);
+    --color-fg-muted: var(--color-zinc-600);
+    --color-accent: var(--color-violet-700);
+    --color-accent-hover: var(--color-violet-800);
+    --color-on-accent: var(--color-white);
+    --color-danger: var(--color-rose-700);
+    --color-danger-hover: var(--color-rose-800);
+    --color-on-danger: var(--color-white);
+    --color-scrim: rgb(9 9 11 / 0.5);
+
+    --animate-pulse-fast: pulse 1s cubic-bezier(0.4, 0.5, 0.6, 1) infinite;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-canvas: var(--color-zinc-950);
+        --color-surface: var(--color-zinc-900);
+        --color-surface-hover: var(--color-zinc-800);
+        --color-line: var(--color-zinc-500);
+        --color-fg: var(--color-zinc-50);
+        --color-fg-muted: var(--color-zinc-400);
+        --color-accent: var(--color-violet-300);
+        --color-accent-hover: var(--color-violet-200);
+        --color-on-accent: var(--color-zinc-950);
+        --color-danger: var(--color-rose-400);
+        --color-danger-hover: var(--color-rose-300);
+        --color-on-danger: var(--color-zinc-950);
+        --color-scrim: rgb(0 0 0 / 0.6);
+    }
+}
+
+@layer base {
+    :root {
+        color-scheme: light dark;
+    }
+
+    body {
+        @apply bg-canvas text-fg antialiased;
+    }
+
+    button:not(:disabled),
+    [role='button']:not(:disabled) {
+        cursor: pointer;
+    }
+
+    :focus-visible {
+        @apply outline-2 outline-offset-2 outline-accent;
+    }
+}

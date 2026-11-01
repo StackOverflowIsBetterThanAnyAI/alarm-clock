@@ -62,7 +62,11 @@ const CurrentTimeButton = () => {
     }
 
     return (
-        <Button onClick={handleClick} unfocussable={popupActive}>
+        <Button
+            onClick={handleClick}
+            unfocussable={popupActive}
+            current={currentTimeActive}
+        >
             Current Time
         </Button>
     )

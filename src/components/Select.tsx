@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 type SelectProps = {
     autofocus?: boolean
-    id: string
+    label: string
     onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void
     options: number[]
     value: number
@@ -10,26 +10,25 @@ type SelectProps = {
 
 const Select: FC<SelectProps> = ({
     autofocus,
-    id,
+    label,
     onChange,
     options,
     value,
 }) => {
+    const id = label.toLowerCase().replaceAll(' ', '-')
+
     return (
         <>
             <label htmlFor={id} className="text-base lg:text-xl sm:text-lg">
-                {id.substring(0, 1).toUpperCase()}
-                {id.substring(1)}:
+                {label}:
             </label>
             <select
                 name={id}
                 id={id}
                 onChange={onChange}
                 value={value}
-                className="bg-zinc-700 p-1 rounded-md outline outline-1 outline-zinc-50 min-w-14 min-h-8 text-base lg:text-xl sm:text-lg
-                focus:outline-4
-                hover:bg-zinc-500
-                active:bg-zinc-600"
+                className="bg-surface text-fg px-2 py-1 rounded-lg border border-line min-w-16 min-h-8 font-mono text-base lg:text-xl sm:text-lg
+                hover:bg-surface-hover"
                 autoFocus={autofocus}
             >
                 {options.map((o) => (

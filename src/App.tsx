@@ -50,7 +50,7 @@ const App = () => {
     })
 
     return (
-        <main className="min-w-96 min-h-90 flex flex-col bg-blue-600 font-sans p-8">
+        <main className="min-w-96 min-h-104 flex flex-col font-sans p-6">
             <ContextAlarm.Provider value={[alarmActive, setAlarmActive]}>
                 <ContextCountdown.Provider
                     value={[countdownActive, setCountdownActive]}
@@ -68,7 +68,7 @@ const App = () => {
                                     value={[popupActive, setPopupActive]}
                                 >
                                     {alarmActive && (
-                                        <div className="flex flex-col justify-end">
+                                        <div className="flex flex-1 flex-col justify-center gap-4">
                                             <CurrentTime
                                                 enabled={timeEnabled}
                                                 hideDate
@@ -77,27 +77,26 @@ const App = () => {
                                         </div>
                                     )}
                                     {countdownActive && (
-                                        <div className="flex flex-col justify-end">
+                                        <div className="flex flex-1 flex-col justify-center gap-4">
                                             <Countdown />
                                         </div>
                                     )}
                                     {currentTimeActive && (
-                                        <div className="flex flex-col justify-end">
+                                        <div className="flex flex-1 flex-col justify-center gap-4">
                                             <Toggle autofocus />
                                             <CurrentTime
                                                 enabled={timeEnabled}
                                             />
                                         </div>
                                     )}
-                                    <div className="pt-4 flex gap-4 justify-center">
-                                        {!alarmActive && <AlarmButton />}
-                                        {!countdownActive && (
-                                            <CountdownButton />
-                                        )}
-                                        {!currentTimeActive && (
-                                            <CurrentTimeButton />
-                                        )}
-                                    </div>
+                                    <nav
+                                        aria-label="Mode"
+                                        className="pt-6 flex gap-2"
+                                    >
+                                        <CurrentTimeButton />
+                                        <AlarmButton />
+                                        <CountdownButton />
+                                    </nav>
                                 </ContextPopupActive.Provider>
                             </ContextCurrentTimeState.Provider>
                         </ContextCurrentTime.Provider>
