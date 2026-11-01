@@ -50,7 +50,7 @@ const App = () => {
     })
 
     return (
-        <main className="min-w-96 min-h-[26rem] flex flex-col font-sans p-6">
+        <main className="min-w-96 min-h-104 flex flex-col font-sans p-6">
             <ContextAlarm.Provider value={[alarmActive, setAlarmActive]}>
                 <ContextCountdown.Provider
                     value={[countdownActive, setCountdownActive]}
